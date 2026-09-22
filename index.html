@@ -1,555 +1,1282 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DotMatrix — Halftone Effect</title>
+  <title>IF &amp; Hormon-Balance-Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #111;
-      --panel: #222;
-      --border: #333;
-      --text: #fff;
-      --muted: #888;
-      --accent: #ff3300;
+      --text: #1a1a1a;
+      --muted: #666;
+      --line: #e5e5e5;
+      --bg: #f7f7f5;
+      --surface: #fff;
+      --accent: #1f4d3a;
+      --warn-bg: #f8f1ef;
+      --warn-border: #e0c4bc;
+      --ok-bg: #eef4f0;
+      --ok-border: #c5d9cc;
+      --font: "DM Sans", system-ui, sans-serif;
     }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
       color: var(--text);
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 14px;
-      overflow: hidden;
+      background: var(--bg);
+      line-height: 1.5;
+      font-size: 15px;
     }
 
-    .app {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+    a { color: var(--accent); }
+
+    .wrap {
+      width: min(720px, calc(100% - 2rem));
+      margin: 0 auto;
     }
 
-    header {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
+    .wide {
+      width: min(960px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    /* Nav */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topnav-inner {
+      width: min(960px, calc(100% - 2rem));
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .progress {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* Hero */
+    header {
+      padding: 2.5rem 0 1.5rem;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
     }
 
     header h1 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
+      font-size: clamp(1.6rem, 4vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
     }
 
-    .controls {
+    header p {
+      color: var(--muted);
+      max-width: 36rem;
+    }
+
+    header .actions {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 10px 16px;
-      flex: 1;
-    }
-
-    .control {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .control label {
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .control input[type="range"] {
-      width: 90px;
-      accent-color: var(--accent);
-    }
-
-    .control input[type="color"] {
-      width: 28px;
-      height: 28px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px;
-      background: var(--panel);
-      cursor: pointer;
-    }
-
-    .control select {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .control .value {
-      font-size: 11px;
-      color: var(--muted);
-      min-width: 28px;
-      text-align: right;
+      gap: 0.5rem;
+      margin-top: 1.1rem;
     }
 
     .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-primary {
       background: var(--accent);
+      border-color: var(--accent);
       color: #fff;
-      border: none;
+    }
+
+    /* Sections */
+    section {
+      padding: 2rem 0;
+      scroll-margin-top: 3.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .lead {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .callout {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.85rem;
+      color: var(--muted);
+    }
+
+    .callout strong { color: var(--text); }
+
+    /* Today controls */
+    .today-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 700px) {
+      .today-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .field select {
+      width: 100%;
+      appearance: none;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 0.55rem 0.7rem;
+      font: inherit;
+      color: var(--text);
+    }
+
+    .sleep-readout {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.3rem;
+    }
+
+    .sleep-readout strong { font-size: 1.25rem; }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .note {
+      margin-top: 1rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 6px;
+      background: var(--ok-bg);
+      border: 1px solid var(--ok-border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .note.warn {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+    }
+
+    .note em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Checklist */
+    .timeline { display: grid; gap: 0.5rem; }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.7rem;
+      align-items: start;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      cursor: pointer;
+    }
+
+    .check-item.done { opacity: 0.65; }
+
+    .check-item.done .check-title { text-decoration: line-through; }
+
+    .check-item input {
+      margin-top: 0.15rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .check-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.35rem;
       border-radius: 4px;
-      padding: 6px 14px;
-      font-size: 12px;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+
+    .check-title { font-weight: 600; margin-bottom: 0.1rem; }
+
+    .check-desc { font-size: 0.875rem; color: var(--muted); }
+
+    .reset-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.75rem;
+    }
+
+    .linkish {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Animal Flow */
+    .flow-layout {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 800px) {
+      .flow-layout { grid-template-columns: 1fr; }
+    }
+
+    .routine-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 0.4rem 0.7rem;
+      font: inherit;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.15s;
     }
 
-    .btn:hover { opacity: 0.85; }
-    .btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover:not(:disabled) {
-      border-color: var(--muted);
-      opacity: 1;
-    }
-
-    .export-btns {
-      display: flex;
-      gap: 6px;
-    }
-
-    .main {
-      display: flex;
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      width: 200px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      gap: 12px;
-    }
-
-    .drop-zone {
-      flex: 1;
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      text-align: center;
-      padding: 16px;
-      min-height: 120px;
-    }
-
-    .drop-zone:hover,
-    .drop-zone.drag-over {
+    .chip.active {
+      background: var(--accent);
       border-color: var(--accent);
-      background: rgba(255, 51, 0, 0.05);
+      color: #fff;
     }
 
-    .drop-zone svg {
-      width: 32px;
-      height: 32px;
-      opacity: 0.4;
-    }
-
-    .drop-zone p {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    .preview-wrap {
-      position: relative;
+    .exercise {
+      border: 1px solid var(--line);
       border-radius: 6px;
+      background: var(--surface);
+      margin-bottom: 0.4rem;
       overflow: hidden;
-      opacity: 0.45;
+    }
+
+    .exercise summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.7rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    .exercise summary::-webkit-details-marker { display: none; }
+    .exercise summary::after { content: "+"; color: var(--muted); font-weight: 400; }
+    .exercise[open] summary::after { content: "–"; }
+
+    .exercise-body {
+      padding: 0 0.85rem 0.85rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--line);
+      padding-top: 0.7rem;
+    }
+
+    .exercise-body ul { margin: 0.45rem 0 0 1.1rem; }
+    .exercise-body li { margin-bottom: 0.2rem; }
+
+    .cue {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .session-box p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .session-steps { display: grid; gap: 0.35rem; }
+
+    .session-step {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background: var(--bg);
+    }
+
+    .session-step .n {
       flex-shrink: 0;
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 4px;
+      background: var(--accent);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
     }
 
-    .preview-wrap img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 140px;
-      object-fit: contain;
+    .week-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1rem;
     }
 
-    .preview-label {
-      font-size: 10px;
+    .week-dots {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .week-dot {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      font-size: 0.7rem;
+      font-weight: 700;
       color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .week-dot.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Table */
+    .stack-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .stack-table th,
+    .stack-table td {
+      text-align: left;
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .stack-table th {
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 4px;
-    }
-
-    .canvas-area {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      min-width: 0;
-      background: var(--panel);
-      position: relative;
-    }
-
-    .canvas-wrap {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    canvas {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    .placeholder {
+      letter-spacing: 0.04em;
       color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-      line-height: 1.6;
+      font-weight: 700;
     }
 
-    #file-input { display: none; }
+    .stack-table tr.done td { opacity: 0.55; }
+
+    .stack-check {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--accent);
+    }
+
+    .note-block {
+      margin-top: 0.85rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 700px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    .info-grid p,
+    .info-grid li {
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    .info-grid ul {
+      margin: 0.4rem 0 0 1.1rem;
+    }
+
+    .info-grid li { margin-bottom: 0.25rem; }
+
+    footer {
+      padding: 1.5rem 0 2.5rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>DotMatrix</h1>
-      <div class="controls">
-        <div class="control">
-          <label for="grid">Grid</label>
-          <input type="range" id="grid" min="3" max="20" value="7">
-          <span class="value" id="grid-val">7px</span>
-        </div>
-        <div class="control">
-          <label for="maxDot">Max dot</label>
-          <input type="range" id="maxDot" min="30" max="100" value="85">
-          <span class="value" id="maxDot-val">85%</span>
-        </div>
-        <div class="control">
-          <label for="blur">Blur</label>
-          <input type="range" id="blur" min="0" max="20" value="3">
-          <span class="value" id="blur-val">3px</span>
-        </div>
-        <div class="control">
-          <label for="dotColor">Dot</label>
-          <input type="color" id="dotColor" value="#ff3300">
-        </div>
-        <div class="control">
-          <label for="bgColor">BG</label>
-          <input type="color" id="bgColor" value="#1a1a1a">
-        </div>
-        <div class="control">
-          <label for="mode">Mode</label>
-          <select id="mode">
-            <option value="luma">Luma</option>
-            <option value="alpha">Alpha</option>
-            <option value="inverted">Inverted</option>
-          </select>
-        </div>
-        <div class="export-btns">
-          <button class="btn" id="download-svg" disabled>Download SVG</button>
-          <button class="btn btn-secondary" id="download-png" disabled>Download PNG</button>
-        </div>
-      </div>
-    </header>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a class="brand" href="#top">Hormon-Balance</a>
+      <ul class="nav-links">
+        <li><a href="#heute">Heute</a></li>
+        <li><a href="#tagesstruktur">Tagesstruktur</a></li>
+        <li><a href="#animal-flow">Animal Flow</a></li>
+        <li><a href="#stack">Supplements</a></li>
+        <li><a href="#hinweise">Hinweise</a></li>
+      </ul>
+      <div class="progress" id="progress-chip">0 / 0 erledigt</div>
+    </div>
+  </nav>
 
-    <div class="main">
-      <aside class="sidebar">
-        <div class="drop-zone" id="drop-zone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 16V4m0 0L8 8m4-4 4 4M4 20h16"/>
-          </svg>
-          <p>Drop image here<br>or click to upload</p>
-        </div>
-        <div id="preview-section" style="display:none">
-          <div class="preview-label">Source</div>
-          <div class="preview-wrap">
-            <img id="preview" alt="Source preview">
-          </div>
-        </div>
-      </aside>
-
-      <div class="canvas-area">
-        <div class="canvas-wrap" id="canvas-wrap">
-          <p class="placeholder" id="placeholder">Upload an image to begin</p>
-          <canvas id="canvas" style="display:none"></canvas>
-        </div>
+  <header id="top">
+    <div class="wide">
+      <h1>IF &amp; Hormon-Balance-Plan</h1>
+      <p>
+        Interaktiver Tagesplan für Intervallfasten, Cortisol-Last und Erholung —
+        mit anpassbarer Kälteexposition und Animal-Flow-Routinen.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#heute">Heute starten</a>
+        <a class="btn" href="#animal-flow">Animal Flow</a>
       </div>
     </div>
-  </div>
+  </header>
 
-  <input type="file" id="file-input" accept="image/png,image/jpeg,image/svg+xml,.png,.jpg,.jpeg,.svg">
+  <main>
+    <section id="kern">
+      <div class="wide">
+        <h2>Der eine Punkt</h2>
+        <div class="box" style="margin-top:0.75rem">
+          <p class="callout">
+            <strong>Kälteexposition, intensives Training (Muay Thai/BJJ), Fasten und ein Schlaf-Limit von 6–7&nbsp;h</strong>
+            sind alle vier Cortisol-Treiber gleichzeitig. Das ist kein Grund, etwas davon zu streichen —
+            aber es erklärt, warum <strong>Erholung der limitierende Faktor</strong> ist, nicht Disziplin.
+            Der Plan ist bewusst so gebaut, dass er das abfedert statt draufzusatteln.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="heute">
+      <div class="wide">
+        <h2>Heute einstellen</h2>
+        <p class="lead">Schlaf und Tagesart steuern die Empfehlungen für Kälte und Intensität.</p>
+        <div class="box">
+          <div class="today-grid">
+            <div class="field">
+              <label for="sleep">Schlaf letzte Nacht</label>
+              <div class="sleep-readout">
+                <strong id="sleep-val">6.5 h</strong>
+                <span style="color:var(--muted);font-size:0.8rem">Ziel oft 6–7 h</span>
+              </div>
+              <input type="range" id="sleep" min="4" max="9" step="0.5" value="6.5">
+            </div>
+            <div class="field">
+              <label for="day-type">Tagesart</label>
+              <select id="day-type">
+                <option value="hard">Harter Trainingstag (Muay Thai / BJJ)</option>
+                <option value="flow">Morgen + Animal Flow</option>
+                <option value="zone2">Ausgleich: Wandern / Laufen</option>
+                <option value="rest">Ruhiger Tag</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cold">Kälteexposition geplant?</label>
+              <select id="cold">
+                <option value="yes">Ja</option>
+                <option value="no">Nein</option>
+              </select>
+            </div>
+          </div>
+          <div class="note" id="adaptive-note" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tagesstruktur">
+      <div class="wide">
+        <h2>Tagesstruktur</h2>
+        <p class="lead">Abhaken speichert lokal im Browser.</p>
+        <div class="timeline" id="checklist"></div>
+        <div class="reset-row">
+          <button type="button" class="linkish" id="reset-day">Tages-Checks zurücksetzen</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="animal-flow">
+      <div class="wide">
+        <h2>Animal Flow</h2>
+        <p class="lead">
+          2–3×/Woche als Teil des Morgen-Trainings. Niedrigere Intensität als Muay Thai/BJJ,
+          zählt aber als Trainingsreiz — nicht als echte Erholung.
+        </p>
+
+        <div class="box week-row">
+          <div>
+            <strong>Wochen-Tracker (Ziel: 2–3 Einheiten)</strong>
+            <div class="week-dots" id="week-dots" aria-label="Animal-Flow-Tage diese Woche"></div>
+          </div>
+          <button type="button" class="linkish" id="reset-week">Woche zurücksetzen</button>
+        </div>
+
+        <div class="flow-layout">
+          <div class="box">
+            <div class="routine-picker" id="routine-picker" role="tablist" aria-label="Routinen"></div>
+            <div id="routine-detail" class="session-box"></div>
+          </div>
+          <div class="box">
+            <h3>Übungsbibliothek</h3>
+            <div id="exercise-lib"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="wide">
+        <h2>Supplement-Stack</h2>
+        <p class="lead">Berberin/Myo-Inositol nur bei gezieltem Insulin-Fokus.</p>
+        <div class="box">
+          <div style="overflow-x:auto">
+            <table class="stack-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Was</th>
+                  <th>Wann</th>
+                  <th>Wofür</th>
+                </tr>
+              </thead>
+              <tbody id="stack-body"></tbody>
+            </table>
+          </div>
+          <p class="note-block">
+            <strong>Nicht Priorität:</strong> Berberin / Myo-Inositol — bei Muay Thai, BJJ und Zone-2
+            ist Insulinsensitivität vermutlich bereits gut abgedeckt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="hinweise">
+      <div class="wide">
+        <h2>Worauf achten</h2>
+        <p class="lead">Nicht wogegen ankämpfen — die Hebel, die bei 6–7&nbsp;h Schlaf wirklich zählen.</p>
+        <div class="info-grid">
+          <div class="box">
+            <h3>Fasten-Fenster: 16&nbsp;h</h3>
+            <p>
+              Sinnvolle Abwägung zwischen Insulin-Vorteil und Cortisol-Last.
+              Nicht auf 18–20&nbsp;h ausweiten, solange der Schlaf bei 6–7&nbsp;h gedeckelt ist.
+            </p>
+          </div>
+          <div class="box">
+            <h3>Elektrolyte / Hydration</h3>
+            <ul>
+              <li>Natrium / Kalium / Magnesium während des Fastens</li>
+              <li>Nach intensiven Einheiten gezielt nachsalzen</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Leptin an kurzen Schlaf-Tagen</h3>
+            <p>
+              Mehr Protein und Ballaststoffe in der ersten Mahlzeit —
+              Hunger läuft vorhersehbarer.
+            </p>
+          </div>
+          <div class="box">
+            <h3>Darmgesundheit</h3>
+            <ul>
+              <li>16&nbsp;h Fasten gibt dem MMC Raum</li>
+              <li>3–4 verschiedene pflanzliche Quellen in einer Mahlzeit</li>
+              <li>1× täglich fermentiert (Sauerkraut, Kimchi, Kefir)</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Monitoring (optional)</h3>
+            <ul>
+              <li><strong>HRV / Ruhe-HF:</strong> über mehrere Tage schlechter → Kälte/Intensität runter</li>
+              <li><strong>Cortisol-Speicheltest:</strong> in AT/DE ohne Rezept</li>
+              <li><strong>CGM:</strong> eher keine Dauerlösung</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>1×/Woche Wandern oder Laufen</h3>
+            <p>
+              Gegenpol zur Cortisol-Last. Bewusst nach kurzem Schlaf oder harter Woche platzieren.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wide">
+      Insulin, Cortisol, Leptin, Ghrelin, Creatin, IF, Darmgesundheit.
+      Fortschritt nur lokal im Browser.
+    </div>
+  </footer>
 
   <script>
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('file-input');
-    const preview = document.getElementById('preview');
-    const previewSection = document.getElementById('preview-section');
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const placeholder = document.getElementById('placeholder');
-    const downloadSvgBtn = document.getElementById('download-svg');
-    const downloadPngBtn = document.getElementById('download-png');
+    const STORAGE_KEY = "hormon-balance-v1";
 
-    const gridInput = document.getElementById('grid');
-    const maxDotInput = document.getElementById('maxDot');
-    const blurInput = document.getElementById('blur');
-    const dotColorInput = document.getElementById('dotColor');
-    const bgColorInput = document.getElementById('bgColor');
-    const modeInput = document.getElementById('mode');
-    const gridVal = document.getElementById('grid-val');
-    const maxDotVal = document.getElementById('maxDot-val');
-    const blurVal = document.getElementById('blur-val');
+    const checklistItems = [
+      {
+        id: "wake",
+        time: "Aufwachen",
+        title: "Feste Weckzeit halten",
+        desc: "Wichtiger für den Cortisol-Rhythmus als die Schlafdauer selbst.",
+        tags: ["recover"],
+      },
+      {
+        id: "caffeine",
+        time: "+60–90 min",
+        title: "Koffein erst 60–90 min nach dem Aufwachen",
+        desc: "Sonst Cortisol-Spike auf Spike.",
+        tags: ["cortisol"],
+      },
+      {
+        id: "cold",
+        time: "Morgen",
+        title: "Kälteexposition",
+        desc: "Dauer wird oben anhand des Schlafs angepasst. Nach <6 h Schlaf kürzen.",
+        tags: ["cortisol"],
+        cold: true,
+      },
+      {
+        id: "flow",
+        time: "Morgen · 2–3×/Wo",
+        title: "Animal Flow (Morgen-Training)",
+        desc: "Trainingsreiz mit niedrigerer Intensität — zählt nicht als echte Erholung.",
+        tags: ["cortisol"],
+        flow: true,
+      },
+      {
+        id: "psyllium",
+        time: "Vor erster Mahlzeit",
+        title: "Psyllium 20–30 min vor dem Essen",
+        desc: "Mit ausreichend Wasser — dämpft den Ghrelin-Peak beim Fastenbrechen am stärksten.",
+        tags: ["ghrelin"],
+      },
+      {
+        id: "meal1",
+        time: "Fastenende",
+        title: "Erste Mahlzeit: protein-first + Creatin 3–5 g",
+        desc: "Stärkster Ghrelin-Hebel. Creatin jetzt (insulinabhängig), nicht nüchtern.",
+        tags: ["ghrelin", "insulin"],
+      },
+      {
+        id: "walk",
+        time: "Nach größeren Mahlzeiten",
+        title: "10–15 min gehen",
+        desc: "Wirksamster Insulin-Hebel neben dem Training selbst.",
+        tags: ["insulin"],
+      },
+      {
+        id: "evening",
+        time: "Abend",
+        title: "Muay Thai / BJJ oder Ausgleichstag",
+        desc: "Deckt Insulinsensitivität und den Großteil der metabolischen Arbeit ab.",
+        tags: ["insulin", "cortisol"],
+      },
+      {
+        id: "electrolytes",
+        time: "Fasten / nach Training",
+        title: "Elektrolyte (Na / K / Mg)",
+        desc: "Während des Fastens und nach intensiven Einheiten nachsalzen.",
+        tags: ["cortisol", "recover"],
+      },
+      {
+        id: "mag",
+        time: "Vor dem Schlafen",
+        title: "Magnesiumglycinat 200–400 mg",
+        desc: "Schlafqualität + Unterstützung für Cortisol/Insulin. Bildschirme aus.",
+        tags: ["recover"],
+      },
+    ];
 
-    let sourceImage = null;
-    let debounceTimer = null;
-    let lastDots = [];
-    let lastDimensions = { W: 0, H: 0 };
+    const supplements = [
+      { id: "s-psyllium", name: "Psyllium", when: "20–30 min vor erster Mahlzeit", why: "Ghrelin dämpfen" },
+      { id: "s-creatine", name: "Creatin 3–5 g", when: "mit erster Mahlzeit", why: "Muskel/Kognition, Aufnahme über Insulin" },
+      { id: "s-ashwa", name: "Ashwagandha KSM-66 300–600 mg", when: "mit einer Mahlzeit · 8–12 Wo, dann 2–3 Wo Pause", why: "Cortisol-Grundlast senken" },
+      { id: "s-omega", name: "Omega-3", when: "mit einer Mahlzeit", why: "Leptin-Signalweg (Triglyceride senken)" },
+      { id: "s-mag", name: "Magnesiumglycinat 200–400 mg", when: "abends", why: "Schlafqualität, Cortisol, Insulin" },
+    ];
 
-    function debounceRender() {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(render, 100);
-    }
+    const exercises = [
+      {
+        name: "Beast",
+        summary: "Vierfüßler-Grundposition — tragende Basis für Flows.",
+        cues: [
+          "Hände unter Schultern, Knie unter Hüften, Knie schweben knapp über dem Boden",
+          "Rücken lang, Blick leicht nach vorne",
+          "Schultern aktiv vom Boden wegdrücken",
+        ],
+        tip: "Atmung ruhig halten — das ist Stabilität, kein Sprint.",
+      },
+      {
+        name: "Loaded Beast",
+        summary: "Hüfte zurück in die Fersen, Arme gestreckt — Speichern von Energie.",
+        cues: [
+          "Aus Beast die Hüfte zu den Fersen schieben",
+          "Arme bleiben lang, Finger aktiv am Boden",
+          "Brust Richtung Oberschenkel, ohne den Rücken rund zu knicken",
+        ],
+        tip: "Nutze Loaded Beast als Startpunkt für Travels und Switches.",
+      },
+      {
+        name: "Beast Reach",
+        summary: "Gegenläufige Reach-Bewegung aus Beast — Schulter und Hüfte öffnen.",
+        cues: [
+          "Eine Hand hebt und reicht nach vorne-oben",
+          "Gegenbein streckt leicht nach hinten",
+          "Becken bleibt stabil, keine Rotation erzwingen",
+        ],
+        tip: "3–5 langsame Wiederholungen pro Seite reichen.",
+      },
+      {
+        name: "Crab",
+        summary: "Rücken zum Boden, Hüfte hoch — Gegenspieler zum Beast.",
+        cues: [
+          "Hände unter Schultern, Finger nach außen oder hinten",
+          "Hüfte hebt, Brust öffnet",
+          "Knie ca. 90°, Füße fest",
+        ],
+        tip: "Schultern weich lassen — nicht in den Nacken ziehen.",
+      },
+      {
+        name: "Crab Reach",
+        summary: "Eine Hand reicht über den Körper, Hüfte bleibt hoch.",
+        cues: [
+          "Aus Crab eine Hand vom Boden lösen",
+          "Arm führt in einem Bogen über den Körper",
+          "Blick folgt der Hand, Hüfte bleibt aktiv",
+        ],
+        tip: "Ideal als mobilisierendes Element in der Cool-down-Phase.",
+      },
+      {
+        name: "Ape",
+        summary: "Tiefe Hocke mit Bodenkontakt der Hände — Start für laterale Travels.",
+        cues: [
+          "Tiefe Squathaltung, Fersen möglichst am Boden",
+          "Hände greifen vor den Füßen den Boden",
+          "Brust bleibt offen, Blick nach vorne",
+        ],
+        tip: "Wenn die Fersen hochkommen: erst mobilisieren, dann Flow.",
+      },
+      {
+        name: "Lateral Traveling Ape",
+        summary: "Seitliches Wandern in der Ape-Position.",
+        cues: [
+          "Aus Ape Hände seitlich versetzen",
+          "Füße folgen in die neue Position",
+          "Hüfte tief halten, nicht aufrichten",
+        ],
+        tip: "4–6 Schritte jede Richtung — kontrolliert, nicht hastig.",
+      },
+      {
+        name: "Underswitch",
+        summary: "Wechsel von Beast zu Crab (und zurück) durch Unterdrehen.",
+        cues: [
+          "Aus Beast eine Hand und das Gegenbein lösen",
+          "Hüfte dreht unter dem Körper durch",
+          "Landen in stabiler Crab-Position",
+        ],
+        tip: "Langsam üben — Qualität vor Tempo.",
+      },
+      {
+        name: "Front Kickthrough",
+        summary: "Bein schießt nach vorne durch, während eine Hand stützt.",
+        cues: [
+          "Aus Beast eine Hand und das Gegenbein heben",
+          "Freies Bein kickt flach nach vorne durch",
+          "Hüfte öffnet, Schulter über der Stützhand",
+        ],
+        tip: "Fuß streift knapp über den Boden — nicht hoch kicken.",
+      },
+      {
+        name: "Side Kickthrough",
+        summary: "Seitlicher Kickthrough — mehr Rotation und Hüftöffnung.",
+        cues: [
+          "Ähnlicher Einstieg wie Front Kickthrough",
+          "Bein führt seitlich durch und streckt",
+          "Blick und Brust folgen der Öffnung",
+        ],
+        tip: "Gute Brücke zwischen Kraft und Mobilität.",
+      },
+      {
+        name: "Scorpion Reach",
+        summary: "Aus Beast Bein hochführen und überkreuzen — intensive Hüft-/Rückenarbeit.",
+        cues: [
+          "Aus Loaded Beast ein Bein nach oben führen",
+          "Knie beugen, Fuß über die Mittellinie bringen",
+          "Schultern und Hände stabil halten",
+        ],
+        tip: "Nur so weit wie kontrolliert — kein erzwungenes Stretching.",
+      },
+      {
+        name: "Wave Unload",
+        summary: "Wellenartige Entladung aus Loaded Beast nach vorne.",
+        cues: [
+          "Aus Loaded Beast Brust und Hüfte wellenförmig nach vorne",
+          "Schultern enden über den Händen",
+          "Bewegung flüssig, nicht segmentiert erzwingen",
+        ],
+        tip: "Verbindet Kraft und Flow — 4–6 Wiederholungen.",
+      },
+    ];
 
-    function loadImage(file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          sourceImage = img;
-          preview.src = e.target.result;
-          previewSection.style.display = 'block';
-          placeholder.style.display = 'none';
-          canvas.style.display = 'block';
-          downloadSvgBtn.disabled = false;
-          downloadPngBtn.disabled = false;
-          render();
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+    const routines = {
+      activation: {
+        label: "Aktivierung · 12–15 min",
+        blurb: "Für Morgen-Tage mit späterem Muay Thai/BJJ. Reiz setzen, nicht auspowern.",
+        steps: [
+          { title: "Beast Hold", detail: "3 × 20–30 Sek. — ruhige Atmung" },
+          { title: "Loaded Beast → Wave Unload", detail: "2 × 6" },
+          { title: "Beast Reach", detail: "2 × 5/Seite" },
+          { title: "Underswitch", detail: "2 × 4/Seite, langsam" },
+          { title: "Front Kickthrough", detail: "2 × 4/Seite" },
+        ],
+      },
+      flow: {
+        label: "Flow-Session · 20–25 min",
+        blurb: "Eigenständige Animal-Flow-Einheit. Zählt als Trainingstag in der Cortisol-Rechnung.",
+        steps: [
+          { title: "Ape + Lateral Traveling Ape", detail: "3 min mobilisieren, dann 2 × 6 Schritte/Seite" },
+          { title: "Beast Travel vorwärts/rückwärts", detail: "2 × 8 Schritte" },
+          { title: "Underswitch → Crab Reach", detail: "3 × 3/Seite" },
+          { title: "Side Kickthrough", detail: "3 × 4/Seite" },
+          { title: "Scorpion Reach", detail: "2 × 4/Seite, kontrolliert" },
+          { title: "Wave Unload Finisher", detail: "2 × 6" },
+        ],
+      },
+      shortSleep: {
+        label: "Nach Kurzem Schlaf · 8–10 min",
+        blurb: "Wenn <6 h Schlaf: Volumen und Intensität runter. Mobilisieren statt pushen.",
+        steps: [
+          { title: "Beast Hold", detail: "2 × 20 Sek." },
+          { title: "Crab Hold + Crab Reach", detail: "2 × 4/Seite" },
+          { title: "Underswitch", detail: "2 × 3/Seite, sehr langsam" },
+          { title: "Optional: Front Kickthrough", detail: "Nur 1 × 3/Seite — oder weglassen" },
+        ],
+      },
+    };
 
-    function handleFile(file) {
-      if (!file || !file.type.startsWith('image/')) return;
-      loadImage(file);
-    }
+    const tagLabels = {
+      cortisol: "Cortisol",
+      insulin: "Insulin",
+      recover: "Erholung",
+      ghrelin: "Ghrelin",
+    };
 
-    dropZone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', (e) => {
-      if (e.target.files[0]) handleFile(e.target.files[0]);
-    });
-
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('drag-over');
-    });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('drag-over');
-      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
-    });
-
-    function getSettings() {
-      return {
-        grid: parseInt(gridInput.value, 10),
-        maxDot: parseInt(maxDotInput.value, 10) / 100,
-        blur: parseInt(blurInput.value, 10),
-        dotColor: dotColorInput.value,
-        bgColor: bgColorInput.value,
-        mode: modeInput.value,
-      };
-    }
-
-    function pixelVal(data, i, mode) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      const a = data[i + 3];
-      if (mode === 'luma') return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      if (mode === 'alpha') return a / 255;
-      return 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    }
-
-    function getBlurredPixelData(imgW, imgH, blur) {
-      const blurCanvas = document.createElement('canvas');
-      blurCanvas.width = imgW;
-      blurCanvas.height = imgH;
-      const blurCtx = blurCanvas.getContext('2d');
-      blurCtx.filter = blur > 0 ? `blur(${blur}px)` : 'none';
-      blurCtx.drawImage(sourceImage, 0, 0);
-      return blurCtx.getImageData(0, 0, imgW, imgH).data;
-    }
-
-    function sampleCell(data, W, H, cx, cy, half, mode) {
-      const x0 = Math.max(0, Math.floor(cx - half));
-      const x1 = Math.min(W, Math.ceil(cx + half));
-      const y0 = Math.max(0, Math.floor(cy - half));
-      const y1 = Math.min(H, Math.ceil(cy + half));
-      let sum = 0;
-      let count = 0;
-      for (let py = y0; py < y1; py++) {
-        for (let px = x0; px < x1; px++) {
-          sum += pixelVal(data, (py * W + px) * 4, mode);
-          count++;
-        }
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch {
+        return {};
       }
-      return count > 0 ? sum / count : 0;
     }
 
-    function buildDots(data, W, H, settings) {
-      const { grid, maxDot, mode } = settings;
-      const half = grid / 2;
-      const dots = [];
-      for (let y = half; y < H; y += grid) {
-        for (let x = half; x < W; x += grid) {
-          const val = sampleCell(data, W, H, x, y, half, mode);
-          if (val > 0.05) {
-            dots.push({ cx: x, cy: y, r: half * val * maxDot });
-          }
-        }
-      }
-      return dots;
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function paintCanvas(dots, W, H, dotColor, bgColor) {
-      canvas.width = W;
-      canvas.height = H;
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = dotColor;
-      for (const { cx, cy, r } of dots) {
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fill();
-      }
+    let state = Object.assign(
+      {
+        sleep: 6.5,
+        dayType: "hard",
+        cold: "yes",
+        checks: {},
+        stack: {},
+        week: [false, false, false, false, false, false, false],
+        routine: "activation",
+      },
+      loadState()
+    );
+
+    const sleepInput = document.getElementById("sleep");
+    const sleepVal = document.getElementById("sleep-val");
+    const dayType = document.getElementById("day-type");
+    const coldSelect = document.getElementById("cold");
+    const adaptiveNote = document.getElementById("adaptive-note");
+    const checklistEl = document.getElementById("checklist");
+    const progressChip = document.getElementById("progress-chip");
+
+    sleepInput.value = state.sleep;
+    dayType.value = state.dayType;
+    coldSelect.value = state.cold;
+
+    function coldRecommendation(hours) {
+      if (hours < 6) return { seconds: "60–90 Sek.", mode: "warn", label: "stark gekürzt" };
+      if (hours < 7) return { seconds: "1,5–2,5 Min.", mode: "ok", label: "moderat" };
+      return { seconds: "2–3 Min. (oder dein übliches Protokoll)", mode: "ok", label: "voll" };
     }
 
-    function buildSVG(dots, W, H, dotColor, bgColor) {
-      const circles = dots.map(
-        ({ cx, cy, r }) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${dotColor}"/>`
-      ).join('');
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">` +
-        `<rect width="${W}" height="${H}" fill="${bgColor}"/>` +
-        circles +
-        `</svg>`;
-    }
+    function updateAdaptive() {
+      const hours = Number(state.sleep);
+      sleepVal.textContent = hours.toFixed(1).replace(".0", "") + " h";
+      const cold = coldRecommendation(hours);
+      const parts = [];
 
-    function downloadFile(content, filename, mime) {
-      const blob = new Blob([content], { type: mime });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.download = filename;
-      link.href = url;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function render() {
-      if (!sourceImage) return;
-
-      const settings = getSettings();
-      const { dotColor, bgColor } = settings;
-      const imgW = sourceImage.naturalWidth;
-      const imgH = sourceImage.naturalHeight;
-      const W = imgW;
-      const H = imgH;
-
-      const data = getBlurredPixelData(imgW, imgH, settings.blur);
-      lastDots = buildDots(data, W, H, settings);
-      lastDimensions = { W, H };
-
-      paintCanvas(lastDots, W, H, dotColor, bgColor);
-      scaleCanvasToFit();
-    }
-
-    function scaleCanvasToFit() {
-      const wrap = document.getElementById('canvas-wrap');
-      const availW = wrap.clientWidth;
-      const availH = wrap.clientHeight;
-      const aspect = canvas.width / canvas.height;
-
-      let displayW, displayH;
-      if (availW / availH > aspect) {
-        displayH = availH;
-        displayW = availH * aspect;
+      if (state.cold === "yes") {
+        parts.push(`Kälte heute: <em>${cold.seconds}</em> (${cold.label}).`);
       } else {
-        displayW = availW;
-        displayH = availW / aspect;
+        parts.push("Keine Kälte geplant — gut, wenn die Gesamtlast hoch ist.");
       }
 
-      canvas.style.width = displayW + 'px';
-      canvas.style.height = displayH + 'px';
+      if (hours < 6) {
+        parts.push("Kurzer Schlaf: Animal Flow → Kurz-Routine, Abend eher Zone-2/Wandern statt weiterer Härte.");
+        parts.push("Erste Mahlzeit: bewusst mehr Protein + Ballaststoffe.");
+      } else if (state.dayType === "zone2") {
+        parts.push("Ausgleichstag: Gegenpol zur Cortisol-Last — Intensität bewusst niedrig halten.");
+      } else if (state.dayType === "flow") {
+        parts.push("Animal-Flow-Tag: zählt als Trainingsreiz. Elektrolyte im Fastenfenster nicht vergessen.");
+      } else if (state.dayType === "hard") {
+        parts.push("Harter Abend (Muay Thai/BJJ): nach der Einheit nachsalzen, nicht erst zur nächsten Mahlzeit.");
+      } else {
+        parts.push("Ruhiger Tag: Erholungsseite priorisieren (feste Weckzeit, Magnesium, ggf. Ashwagandha).");
+      }
+
+      adaptiveNote.className = "note" + (cold.mode === "warn" && state.cold === "yes" ? " warn" : "");
+      adaptiveNote.innerHTML = parts.join(" ");
     }
 
-    gridInput.addEventListener('input', () => {
-      gridVal.textContent = gridInput.value + 'px';
-      debounceRender();
-    });
-    maxDotInput.addEventListener('input', () => {
-      maxDotVal.textContent = maxDotInput.value + '%';
-      debounceRender();
-    });
-    blurInput.addEventListener('input', () => {
-      blurVal.textContent = blurInput.value + 'px';
-      debounceRender();
-    });
-    dotColorInput.addEventListener('input', debounceRender);
-    bgColorInput.addEventListener('input', debounceRender);
-    modeInput.addEventListener('change', debounceRender);
+    function visibleItems() {
+      return checklistItems
+        .filter((item) => {
+          if (item.cold && state.cold !== "yes") return false;
+          if (item.flow && state.dayType !== "flow" && state.dayType !== "hard") return false;
+          return true;
+        })
+        .map((item) => {
+          if (item.id === "evening") {
+            if (state.dayType === "zone2") {
+              return {
+                ...item,
+                title: "Wandern / Laufen (Ausgleich)",
+                desc: "Niedrige Intensität, parasympathische Erholung — bewusst als Gegenpol.",
+              };
+            }
+            if (state.dayType === "rest") {
+              return {
+                ...item,
+                title: "Kein intensives Abendtraining",
+                desc: "Ruhiger Tag: Spaziergang ok, aber kein zusätzlicher Cortisol-Peak.",
+              };
+            }
+            if (state.dayType === "flow") {
+              return {
+                ...item,
+                title: "Abend leicht halten oder Technik",
+                desc: "Animal Flow war schon Reiz — Abend nicht noch voll auslasten.",
+              };
+            }
+          }
+          if (item.cold) {
+            const cold = coldRecommendation(Number(state.sleep));
+            return {
+              ...item,
+              desc: `Heute empfohlen: ${cold.seconds}. Nach <6 h Schlaf den Reiz kürzen.`,
+            };
+          }
+          if (item.flow && Number(state.sleep) < 6) {
+            return { ...item, desc: "Heute Kurz-Routine (8–10 min). Qualität vor Volumen." };
+          }
+          return item;
+        });
+    }
 
-    downloadSvgBtn.addEventListener('click', () => {
-      const { dotColor, bgColor } = getSettings();
-      const { W, H } = lastDimensions;
-      const svg = buildSVG(lastDots, W, H, dotColor, bgColor);
-      downloadFile(svg, 'dotmatrix.svg', 'image/svg+xml');
+    function renderChecklist() {
+      const items = visibleItems();
+      checklistEl.innerHTML = items
+        .map((item) => {
+          const done = !!state.checks[item.id];
+          const tags = item.tags
+            .map((t) => `<span class="tag">${tagLabels[t]}</span>`)
+            .join("");
+          return `
+            <label class="check-item ${done ? "done" : ""}" data-id="${item.id}">
+              <input type="checkbox" ${done ? "checked" : ""} data-check="${item.id}">
+              <div>
+                <div class="check-meta">
+                  <span class="tag">${item.time}</span>
+                  ${tags}
+                </div>
+                <div class="check-title">${item.title}</div>
+                <div class="check-desc">${item.desc}</div>
+              </div>
+            </label>`;
+        })
+        .join("");
+
+      const doneCount = items.filter((i) => state.checks[i.id]).length;
+      progressChip.textContent = `${doneCount} / ${items.length} erledigt`;
+    }
+
+    function renderStack() {
+      const body = document.getElementById("stack-body");
+      body.innerHTML = supplements
+        .map((s) => {
+          const done = !!state.stack[s.id];
+          return `
+            <tr class="${done ? "done" : ""}">
+              <td><input class="stack-check" type="checkbox" data-stack="${s.id}" ${done ? "checked" : ""}></td>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.when}</td>
+              <td>${s.why}</td>
+            </tr>`;
+        })
+        .join("");
+    }
+
+    function renderWeek() {
+      const days = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+      const el = document.getElementById("week-dots");
+      el.innerHTML = days
+        .map(
+          (d, i) =>
+            `<button type="button" class="week-dot ${state.week[i] ? "on" : ""}" data-day="${i}" aria-pressed="${state.week[i]}" title="${d}">${d}</button>`
+        )
+        .join("");
+    }
+
+    let lastSleepBucket = null;
+
+    function renderRoutines() {
+      const picker = document.getElementById("routine-picker");
+      const sleepHours = Number(state.sleep);
+      const bucket = sleepHours < 6 ? "short" : "normal";
+      if (lastSleepBucket === null) {
+        if (bucket === "short") state.routine = "shortSleep";
+        lastSleepBucket = bucket;
+      } else if (lastSleepBucket !== bucket) {
+        state.routine = bucket === "short" ? "shortSleep" : "activation";
+        lastSleepBucket = bucket;
+      }
+      if (!routines[state.routine]) state.routine = "activation";
+
+      picker.innerHTML = Object.entries(routines)
+        .map(
+          ([key, r]) =>
+            `<button type="button" class="chip ${state.routine === key ? "active" : ""}" data-routine="${key}">${r.label}</button>`
+        )
+        .join("");
+
+      const r = routines[state.routine];
+      document.getElementById("routine-detail").innerHTML = `
+        <h3>${r.label}</h3>
+        <p>${r.blurb}</p>
+        <div class="session-steps">
+          ${r.steps
+            .map(
+              (s, i) => `
+            <div class="session-step">
+              <div class="n">${i + 1}</div>
+              <div><strong>${s.title}</strong><br>${s.detail}</div>
+            </div>`
+            )
+            .join("")}
+        </div>`;
+    }
+
+    function renderExercises() {
+      document.getElementById("exercise-lib").innerHTML = exercises
+        .map(
+          (ex) => `
+        <details class="exercise">
+          <summary>${ex.name}</summary>
+          <div class="exercise-body">
+            <p>${ex.summary}</p>
+            <ul>${ex.cues.map((c) => `<li>${c}</li>`).join("")}</ul>
+            <span class="cue">${ex.tip}</span>
+          </div>
+        </details>`
+        )
+        .join("");
+    }
+
+    function persistAndRender() {
+      saveState(state);
+      updateAdaptive();
+      renderChecklist();
+      renderStack();
+      renderWeek();
+      renderRoutines();
+    }
+
+    sleepInput.addEventListener("input", () => {
+      state.sleep = Number(sleepInput.value);
+      persistAndRender();
     });
 
-    downloadPngBtn.addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.download = 'dotmatrix.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+    dayType.addEventListener("change", () => {
+      state.dayType = dayType.value;
+      persistAndRender();
     });
 
-    window.addEventListener('resize', () => {
-      if (sourceImage) scaleCanvasToFit();
+    coldSelect.addEventListener("change", () => {
+      state.cold = coldSelect.value;
+      persistAndRender();
     });
+
+    checklistEl.addEventListener("change", (e) => {
+      const id = e.target.getAttribute("data-check");
+      if (!id) return;
+      state.checks[id] = e.target.checked;
+      persistAndRender();
+    });
+
+    document.getElementById("stack-body").addEventListener("change", (e) => {
+      const id = e.target.getAttribute("data-stack");
+      if (!id) return;
+      state.stack[id] = e.target.checked;
+      persistAndRender();
+    });
+
+    document.getElementById("week-dots").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-day]");
+      if (!btn) return;
+      const i = Number(btn.getAttribute("data-day"));
+      state.week[i] = !state.week[i];
+      persistAndRender();
+    });
+
+    document.getElementById("routine-picker").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-routine]");
+      if (!btn) return;
+      state.routine = btn.getAttribute("data-routine");
+      persistAndRender();
+    });
+
+    document.getElementById("reset-day").addEventListener("click", () => {
+      state.checks = {};
+      state.stack = {};
+      persistAndRender();
+    });
+
+    document.getElementById("reset-week").addEventListener("click", () => {
+      state.week = [false, false, false, false, false, false, false];
+      persistAndRender();
+    });
+
+    renderExercises();
+    persistAndRender();
   </script>
 </body>
 </html>

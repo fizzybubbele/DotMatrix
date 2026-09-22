@@ -1,0 +1,10 @@
+{
+  "name": "hormon-balance-plan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive IF & Hormon-Balance plan (local static site)",
+  "scripts": {
+    "start": "npx --yes serve . -l 3000",
+    "dev": "python3 -m http.server 3000"
+  }
+}
