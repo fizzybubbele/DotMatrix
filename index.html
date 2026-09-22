@@ -1273,12 +1273,21 @@
         .join("");
     }
 
+    let lastSleepBucket = null;
+
     function renderRoutines() {
       const picker = document.getElementById("routine-picker");
       const sleepHours = Number(state.sleep);
-      const preferred = sleepHours < 6 ? "shortSleep" : state.routine === "shortSleep" ? "activation" : state.routine;
-      if (sleepHours < 6) state.routine = "shortSleep";
-      else if (state.routine === "shortSleep") state.routine = preferred;
+      const bucket = sleepHours < 6 ? "short" : "normal";
+      // Auto-pick Kurz-Routine when crossing into <6h; otherwise keep the user's chip choice
+      if (lastSleepBucket === null) {
+        if (bucket === "short") state.routine = "shortSleep";
+        lastSleepBucket = bucket;
+      } else if (lastSleepBucket !== bucket) {
+        state.routine = bucket === "short" ? "shortSleep" : "activation";
+        lastSleepBucket = bucket;
+      }
+      if (!routines[state.routine]) state.routine = "activation";
 
       picker.innerHTML = Object.entries(routines)
         .map(
