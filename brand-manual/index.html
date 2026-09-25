@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAMCHE / Bildkonzept &amp; visuelle Markenwelt</title>
+  <style>
+    :root {
+      --erebos: #262626;
+      --nyx: #66666e;
+      --rhea: #bab4ab;
+      --selene: #f1efe8;
+      --olymp: #f0f2f5;
+      --demeter: #7ca45c;
+      --artemis: #0e7a5f;
+      --amphitrite: #22a6a0;
+      --atlas: #94c7e6;
+      --poseidon: #1a387a;
+      --uranos: #0d1738;
+      --helios: #ffd433;
+      --eos: #f2942e;
+      --hestia: #eb4629;
+      --chloris: #e03894;
+      --apollon: #b88cd1;
+      --aion: #738cd9;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: var(--selene);
+      color: var(--erebos);
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .board {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .kicker {
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
+
+    h2 {
+      margin: 56px 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .note {
+      margin: 0 0 20px;
+      max-width: 68em;
+    }
+
+    .swatches {
+      display: flex;
+      gap: 15px;
+    }
+
+    .swatch { flex: 1 1 0; min-width: 0; }
+
+    .chip {
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+    }
+
+    .chip.light { color: var(--selene); }
+    .chip.dark { color: var(--erebos); }
+
+    .name { margin: 8px 0 0; }
+    .hex {
+      margin: 0;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--nyx);
+    }
+
+    .bar {
+      display: flex;
+      height: 80px;
+      margin-bottom: 12px;
+    }
+
+    .bar span { flex: 1; }
+
+    .quote {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: start;
+      max-width: 68em;
+    }
+
+    .plus {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .specimen {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 8px;
+    }
+
+    .specimen p {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.3;
+      white-space: pre-line;
+    }
+
+    .specimen .mono {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    .coord {
+      margin: 28px 0 0;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .plates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 12px;
+      align-items: flex-start;
+    }
+
+    figure { margin: 0; width: 210px; }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .swatches { flex-wrap: wrap; }
+      .swatch { flex: 1 1 30%; }
+      .specimen { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <h1>NAMCHE</h1>
+    <p class="kicker">Bildkonzept &amp; visuelle Markenwelt</p>
+    <p class="note">Abschrift von _Dok3, in derselben Reihenfolge wie die Slides dort. 01 Bildkonzept, 02 Farbsystem, 03 Zwei Bildebenen, 03 Hestia Field + Filter, 04 Schrift, 05 Kontakt, 06–08 Hestia Field + Filter, 09 Metaball 3-D, 10 Scope of Application, 11 Koordinaten. Schrift hier ist die Systemschrift.</p>
+
+    <h2>FARBSYSTEM</h2>
+
+    <h2>GAIA</h2>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip light" style="background:#262626">Aa</div>
+        <p class="name">Erebos</p>
+        <p class="hex">#262626</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#66666E">Aa</div>
+        <p class="name">Nyx</p>
+        <p class="hex">#66666E</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#BAB4AB">Aa</div>
+        <p class="name">Rhea</p>
+        <p class="hex">#BAB4AB</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#F1EFE8">Aa</div>
+        <p class="name">Selene</p>
+        <p class="hex">#F1EFE8</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#F0F2F5">Aa</div>
+        <p class="name">Olymp</p>
+        <p class="hex">#F0F2F5</p>
+      </div>
+    </div>
+
+    <h2>OKEANOS</h2>
+    <div class="bar" aria-hidden="true">
+      <span style="background:#7CA45C"></span>
+      <span style="background:#0E7A5F"></span>
+      <span style="background:#22A6A0"></span>
+      <span style="background:#94C7E6"></span>
+      <span style="background:#1A387A"></span>
+      <span style="background:#0D1738"></span>
+    </div>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip light" style="background:#7CA45C">Aa</div>
+        <p class="name">Demeter</p>
+        <p class="hex">#7CA45C</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#0E7A5F">Aa</div>
+        <p class="name">Artemis</p>
+        <p class="hex">#0E7A5F</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#22A6A0">Aa</div>
+        <p class="name">Amphitrite</p>
+        <p class="hex">#22A6A0</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#94C7E6">Aa</div>
+        <p class="name">Atlas</p>
+        <p class="hex">#94C7E6</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#1A387A">Aa</div>
+        <p class="name">Poseidon</p>
+        <p class="hex">#1A387A</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#0D1738">Aa</div>
+        <p class="name">Uranos</p>
+        <p class="hex">#0D1738</p>
+      </div>
+    </div>
+
+    <h2>HELIOS</h2>
+    <div class="bar" aria-hidden="true">
+      <span style="background:#FFD433"></span>
+      <span style="background:#F2942E"></span>
+      <span style="background:#EB4629"></span>
+      <span style="background:#E03894"></span>
+      <span style="background:#B88CD1"></span>
+      <span style="background:#738CD9"></span>
+    </div>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip dark" style="background:#FFD433">Aa</div>
+        <p class="name">Helios</p>
+        <p class="hex">#FFD433</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#F2942E">Aa</div>
+        <p class="name">Eos</p>
+        <p class="hex">#F2942E</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#EB4629">Aa</div>
+        <p class="name">Hestia</p>
+        <p class="hex">#EB4629</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#E03894">Aa</div>
+        <p class="name">Chloris</p>
+        <p class="hex">#E03894</p>
+      </div>
+      <div class="swatch">
+        <div class="chip dark" style="background:#B88CD1">Aa</div>
+        <p class="name">Apollon</p>
+        <p class="hex">#B88CD1</p>
+      </div>
+      <div class="swatch">
+        <div class="chip light" style="background:#738CD9">Aa</div>
+        <p class="name">Aion</p>
+        <p class="hex">#738CD9</p>
+      </div>
+    </div>
+
+    <h2>ZWEI BILDEBENEN / EINE ERZÄHLUNG</h2>
+    <div class="quote">
+      <div class="plus" aria-hidden="true">+<br>+</div>
+      <p class="note">Der Körper als Schnittstelle – zu Technologie ebenso wie zum Gegenüber / Extreme Makroaufnahmen einzelner Sinnesorgane/Kontaktpunkte / Kontaktpunkt Mensch–Mensch UND Mensch–Technologie (Vertrauen entsteht in beidem) / Stil: warmes Licht auf Haut + kühle/rote Kunstlicht-Kante, geringe Schärfentiefe, analog/körnig</p>
+      <div class="plus" aria-hidden="true">+<br>+</div>
+    </div>
+
+    <h2>HESTIA FIELD + FILTER</h2>
+    <div class="plates">
+      <figure>
+        <img src="images/hestia-c.png" alt="Hestia Field + Filter">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-b.png" alt="Hestia Field + Filter">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+    </div>
+
+    <h2>SCHRIFT</h2>
+    <div class="specimen">
+      <p>ABCDEFGHIJKLMN
+OPQRSTUVWXYZ
+abcdefghijklm
+nopqrstuvwxyz
+0123456789 &amp;&gt;!</p>
+      <p class="mono">ABCDEFGHIJKLMN
+OPQRSTUVWXYZ
+abcdefghijklm
+nopqrstuvwxyz
+0123456789 &amp;!</p>
+    </div>
+
+    <h2>KONTAKT</h2>
+    <div class="plates">
+      <figure>
+        <img src="images/flux.png" alt="Porträt im roten Licht, Hände vor dem Gesicht">
+        <figcaption>Flux</figcaption>
+      </figure>
+    </div>
+    <div class="quote">
+      <div class="plus" aria-hidden="true">+<br>+</div>
+      <p class="note">Der Körper als Schnittstelle – zu Technologie ebenso wie zum Gegenüber / Extreme Makroaufnahmen einzelner Sinnesorgane/Kontaktpunkte / Kontaktpunkt Mensch–Mensch UND Mensch–Technologie (Vertrauen entsteht in beidem) / Stil: warmes Licht auf Haut + kühle/rote Kunstlicht-Kante, geringe Schärfentiefe, analog/körnig</p>
+      <div class="plus" aria-hidden="true">+<br>+</div>
+    </div>
+
+    <h2>HESTIA FIELD + FILTER</h2>
+    <div class="plates">
+      <figure>
+        <img src="images/hestia-a.png" alt="Hestia Field + Filter, Bergkamm mit Passkreuz">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-d.png" alt="Hestia Field + Filter, Siedlung aus der Höhe mit Passkreuz">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-e.png" alt="Hestia Field + Filter">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-f.png" alt="Hestia Field + Filter">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-g.png" alt="Hestia Field + Filter">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+      <figure>
+        <img src="images/hestia-h.png" alt="Hestia Field + Filter, Hautmakro mit Passkreuz">
+        <figcaption>Hestia Field + Filter</figcaption>
+      </figure>
+    </div>
+
+    <h2>METABALL 3-D</h2>
+    <div class="plates">
+      <figure>
+        <img src="images/metaball.png" alt="Metaball 3-D, verschmolzene Körper auf schwarzem Grund">
+        <figcaption>Metaball 3-D</figcaption>
+      </figure>
+    </div>
+
+    <h2>SCOPE OF APPLICATION</h2>
+    <p class="note">K003</p>
+    <p class="coord">47.2683° N · 9.5876° E — feldkirch, campusväre</p>
+  </main>
+</body>
+</html>
